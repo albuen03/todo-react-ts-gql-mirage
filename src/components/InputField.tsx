@@ -1,18 +1,7 @@
-import { Input, InputProps, InputRef } from 'antd';
-import Group from 'antd/es/input/Group';
-import Password from 'antd/es/input/Password';
-import Search from 'antd/es/input/Search';
-import TextArea from 'antd/es/input/TextArea';
+import { Input, InputProps } from 'antd';
 import { styled } from 'styled-components';
 
-type InputFieldProps = React.ForwardRefExoticComponent<
-  InputProps & React.RefAttributes<InputRef>
-> & {
-  Group: typeof Group;
-  Search: typeof Search;
-  TextArea: typeof TextArea;
-  Password: typeof Password;
-};
+type InputFieldProps = InputProps;
 
 const Circle = styled.div<{ size: number }>`
   background-color: rgba(0, 0, 0, 0);
