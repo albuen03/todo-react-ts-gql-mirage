@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_TODOS = gql`
-  query getTodos {
+  query GetTodos {
     userTodos {
       id
     }
