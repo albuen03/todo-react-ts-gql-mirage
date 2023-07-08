@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { styled } from 'styled-components';
 
 interface Props {
-  children: ReactNode[]
+  children: ReactNode[];
 }
 
 const WrapperComponent = styled.div`
@@ -10,7 +10,7 @@ const WrapperComponent = styled.div`
   height: 800px;
 `;
 
-const Layout = ({ children }: Props) => {
+const Layout: React.FC<Props> = ({ children }) => {
   return <WrapperComponent>{...children}</WrapperComponent>;
 };
 

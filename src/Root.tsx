@@ -4,7 +4,7 @@ import AuthenticationPage from './pages/AuthenticationPage';
 import TodoListPage from './pages/TodoListPage';
 import PrivateRoutes from './utils/PrivateRoutes';
 
-export const Root = () => (
+export const Root: React.FC<{}> = () => (
   <Router>
     <Routes>
       <Route element={<PrivateRoutes />}>

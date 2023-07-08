@@ -18,7 +18,7 @@ const StyledButton = styled(Button)<{ primary?: number }>`
   color: ${(props) => (props.primary ? colors.offWhite : colors.fontBlack)};
 `;
 
-const AuthenticationPage = () => {
+const AuthenticationPage: React.FC<{}> = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [getToken, { data: getTokenData, error: getTokenError }] = useMutation(GET_TOKEN);
@@ -33,30 +33,25 @@ const AuthenticationPage = () => {
   const handleSignup = () => {
     form
       .validateFields()
-      .then(async (values) =>
+      .then((values) =>
         createUser({ variables: { email: values.email, password: values.password } })
       );
   };
-
-  console.log('createUserData: ', createUserData);
-  console.log('createUserError: ', createUserError);
 
   useEffect(() => {
     if (createUserData && !createUserError) {
       const { email, password } = form.getFieldsValue();
       getToken({ variables: { email, password } });
     }
-  }, getTokenData);
+  }, createUserData);
 
   useEffect(() => {
-    if (getTokenData?.token) {
+    if (getTokenData?.token && getTokenError) {
       localStorage.setItem(TOKEN_KEY, getTokenData.token);
       navigate(routes.todoList);
     }
   }, getTokenData);
 
-  console.log('getTokendata: ', getTokenData);
-  console.log('getTokenDataError: ', getTokenError);
   return (
     <Layout>
       Sign Up or Log In
