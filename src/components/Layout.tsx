@@ -8,6 +8,9 @@ interface Props {
 const WrapperComponent = styled.div`
   background-color: #dcd6d8;
   height: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Layout: React.FC<Props> = ({ children }) => {

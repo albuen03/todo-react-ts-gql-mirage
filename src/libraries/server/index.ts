@@ -7,9 +7,7 @@ import { sign, verify } from './jwt';
 import { schema } from './schema';
 
 const getCurrentUser = async (context: any) => {
-  console.log('getCurrentUser: ');
   const token = context.request.requestHeaders.authorization;
-  console.log('token: ', token);
   if (!token) throw new GraphQLError('unauthorized');
   const payload = await verify(token.slice(7));
   const user = context.mirageSchema.users.findBy({ id: payload.id });

@@ -1,5 +1,4 @@
-import { Button, Form } from 'antd';
-import { styled } from 'styled-components';
+import { Form } from 'antd';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER, GET_TOKEN } from '../../graphql/mutations/authentication';
 import { useEffect } from 'react';
@@ -8,15 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import routes from '../../routes';
 import Layout from '../../components/Layout';
 import InputField from '../../components/InputField';
-import colors from '../../colors';
-
-const StyledButton = styled(Button)<{ primary?: number }>`
-  border-radius: 16px;
-  background-color: ${(props) => (props.primary ? colors.red : colors.offWhite)};
-  height: 47px;
-  padding: 14px 16px 14px 16px;
-  color: ${(props) => (props.primary ? colors.offWhite : colors.fontBlack)};
-`;
+import Button from '../../components/Button';
 
 const AuthenticationPage: React.FC<{}> = () => {
   const [form] = Form.useForm();
@@ -99,10 +90,8 @@ const AuthenticationPage: React.FC<{}> = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <StyledButton onClick={handleLogin}>Log in</StyledButton>
-          <StyledButton primary={+true} onClick={handleSignup}>
-            Sign up
-          </StyledButton>
+          <Button onClick={handleLogin} label="Log in" />
+          <Button primary={+true} onClick={handleSignup} label="Sign up" />
         </Form.Item>
       </Form>
     </Layout>
