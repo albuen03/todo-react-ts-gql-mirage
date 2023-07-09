@@ -66,7 +66,9 @@ const CheckboxIndicator = ({ className, defaultChecked, ...props }: any) => {
 
 const TodoItem: React.FC<Props> = ({ todo }) => {
   const isDone = todo.status === todoStatuses.DONE;
-  const [updateTodo] = useMutation(UPDATE_TODO);
+  const [updateTodo] = useMutation(UPDATE_TODO, {
+    refetchQueries: [GET_TODOS]
+  });
   const [deleteTodo] = useMutation(DELETE_TODO, {
     refetchQueries: [GET_TODOS]
   });

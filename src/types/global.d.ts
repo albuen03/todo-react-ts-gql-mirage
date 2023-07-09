@@ -4,3 +4,5 @@ export type Todo = {
   content: string;
   __typename: string;
 };
+
+export type VoidFunction = () => void;

@@ -28,7 +28,7 @@ export const schema = gql`
     allTodos: [Todo]
     user(id: ID!): User
     todo(id: ID!): Todo
-    userTodos: [Todo]
+    userTodos(search: String, sortByCreatedDate: String): [Todo]
   }
 
   input TodoInput {

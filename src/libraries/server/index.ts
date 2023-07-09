@@ -24,7 +24,26 @@ export const server = createServer({
         Query: {
           async userTodos(obj: any, args: any, context: any, info: any) {
             const user = await getCurrentUser(context);
-            return user.todos.models;
+            const { search, sortByCreatedDate } = args;
+            const todoStatusTodos = user.todos.models
+              .filter((item: any) => item.status === 'TODO')
+              .sort((a: any, b: any) => b.updatedAt - a.updatedAt);
+            const doneStatusTodos = user.todos.models
+              .filter((item: any) => item.status === 'DONE')
+              .sort((a: any, b: any) => b.updatedAt - a.updatedAt);
+            const todos = [...todoStatusTodos, ...doneStatusTodos].filter((item: any) =>
+              item.content.includes(search)
+            );
+            const sortedTodos = sortByCreatedDate
+              ? todos.sort((a: any, b: any) => {
+                  const sortBy =
+                    sortByCreatedDate === 'desc'
+                      ? b.updatedAt - a.updatedAt
+                      : a.updatedAt - b.updatedAt;
+                  return sortBy;
+                })
+              : todos;
+            return sortedTodos;
           }
         },
         Mutation: {
