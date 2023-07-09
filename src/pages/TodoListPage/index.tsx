@@ -11,18 +11,27 @@ import TodoList from './TodoList';
 const TodoListPage: React.FC<{}> = () => {
   const [todo, setTodo] = useState<string>('');
   const [search, setSearch] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortByCreatedDate, setSortByCreatedDate] = useState<string | null>(null);
   const [createTodo, { data: createTodoData, error: createTodoError }] = useMutation(CREATE_TODO);
-  const { data: todosData, refetch } = useQuery(GET_TODOS);
+  const { data: todosData, refetch } = useQuery(GET_TODOS, {
+    variables: {
+      search,
+      sortByCreatedDate,
+      page: currentPage
+    },
+    fetchPolicy: 'cache-and-network'
+  });
 
   const handleCreateTodo: VoidFunction = () => {
     createTodo({ variables: { content: todo } });
   };
 
-  const handleSearch: VoidFunction  = () => {
+  const handleSearch: VoidFunction = () => {
     refetch({
       search,
-      sortByCreatedDate
+      sortByCreatedDate,
+      page: currentPage
     });
   };
 
@@ -30,7 +39,17 @@ const TodoListPage: React.FC<{}> = () => {
     setSortByCreatedDate(value);
     refetch({
       search,
-      sortByCreatedDate: value
+      sortByCreatedDate: value,
+      page: currentPage
+    });
+  };
+
+  const handleChangePage: (value: number) => void = (value) => {
+    setCurrentPage(value);
+    refetch({
+      search,
+      sortByCreatedDate,
+      page: value
     });
   };
 
@@ -39,7 +58,8 @@ const TodoListPage: React.FC<{}> = () => {
       setTodo('');
       refetch({
         search,
-        sortByCreatedDate
+        sortByCreatedDate,
+        page: currentPage
       });
     }
   }, [createTodoData]);
@@ -93,7 +113,11 @@ const TodoListPage: React.FC<{}> = () => {
             }
           ]}
         />
-        <TodoList todos={todosData?.userTodos} />
+        <TodoList
+          todos={todosData?.userTodos}
+          currentPage={currentPage}
+          handleChangePage={handleChangePage}
+        />
       </Col>
       <>sdasd</>
     </Layout>

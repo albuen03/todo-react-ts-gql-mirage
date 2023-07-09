@@ -22,9 +22,11 @@ export const server = createServer({
       root: undefined,
       resolvers: {
         Query: {
+          // must use graphql pagination if available
           async userTodos(obj: any, args: any, context: any, info: any) {
             const user = await getCurrentUser(context);
-            const { search, sortByCreatedDate } = args;
+            const pageLimit = 5; // setting it here for this exercise, must be a frontend parameter
+            const { search, sortByCreatedDate, page } = args;
             const todoStatusTodos = user.todos.models
               .filter((item: any) => item.status === 'TODO')
               .sort((a: any, b: any) => b.updatedAt - a.updatedAt);
@@ -43,7 +45,13 @@ export const server = createServer({
                   return sortBy;
                 })
               : todos;
-            return sortedTodos;
+            const initialIndex = pageLimit * (page - 1);
+            const lastIndex = initialIndex + pageLimit;
+            const paginatedTodos = sortedTodos.slice(initialIndex, lastIndex);
+            return {
+              edges: paginatedTodos,
+              totalCount: sortedTodos.length
+            };
           }
         },
         Mutation: {
