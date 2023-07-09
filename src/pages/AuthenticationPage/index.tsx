@@ -9,6 +9,7 @@ import Layout from '../../components/Layout';
 import InputField from '../../components/InputField';
 import Button from '../../components/Button';
 import Title from '../../components/Title';
+import colors from '../../colors';
 
 const AuthenticationPage: React.FC<{}> = () => {
   const [form] = Form.useForm();
@@ -88,6 +89,12 @@ const AuthenticationPage: React.FC<{}> = () => {
         >
           <InputField placeholder="Password" />
         </Form.Item>
+
+        {(getTokenError || createUserError) && (
+          <Row style={{ marginBottom: '10px', marginTop: '-10px' }}>
+            <Title $color={colors.red}>User does not exist or wrong password.</Title>
+          </Row>
+        )}
 
         <Row style={{ justifyContent: 'flex-end' }}>
           <Button onClick={handleLogin} label="Log in" style={{ marginRight: '10px' }} />
