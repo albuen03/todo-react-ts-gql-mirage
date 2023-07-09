@@ -5,4 +5,10 @@ export type Todo = {
   __typename: string;
 };
 
+export type PaginatedTodos = {
+  edges: [Todo];
+  totalCount: number;
+  __typename: string;
+};
+
 export type VoidFunction = () => void;

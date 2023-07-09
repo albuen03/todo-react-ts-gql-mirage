@@ -23,12 +23,17 @@ export const schema = gql`
     user: User!
   }
 
+  type PaginatedTodos {
+    edges: [Todo]
+    totalCount: Int
+  }
+
   type Query {
     allUsers: [User]
     allTodos: [Todo]
     user(id: ID!): User
     todo(id: ID!): Todo
-    userTodos(search: String, sortByCreatedDate: String): [Todo]
+    userTodos(search: String, sortByCreatedDate: String, page: Int): PaginatedTodos
   }
 
   input TodoInput {
