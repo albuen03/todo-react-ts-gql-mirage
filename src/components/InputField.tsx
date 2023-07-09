@@ -3,18 +3,23 @@ import { styled } from 'styled-components';
 
 type InputFieldProps = InputProps;
 
-const Circle = styled.div<{ size: number }>`
+const StyledInput = styled(Input)`
+  height: 45px;
+  border-radius: 16px;
+`;
+
+const Circle = styled.div`
   background-color: rgba(0, 0, 0, 0);
   border: 2px solid #df2060;
-  height: ${(props) => props.size}px;
+  height: 16px;
   border-radius: 50%;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
-  width: ${(props) => props.size}px;
+  width: 16px;
 `;
 
 const InputField: React.FC<InputFieldProps> = ({ ...restprops }) => {
-  return <Input prefix={<Circle size={14} />} {...restprops} />;
+  return <StyledInput prefix={<Circle />} {...restprops} />;
 };
 
 export default InputField;

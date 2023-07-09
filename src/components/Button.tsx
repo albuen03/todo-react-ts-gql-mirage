@@ -8,11 +8,12 @@ type AdditionalButtonProps = {
 };
 
 type Props = ButtonProps & AdditionalButtonProps;
+
 const StyledButton = styled(AntdButton)<{ primary?: number }>`
   border-radius: 16px;
   background-color: ${(props) => (props.primary ? colors.red : colors.offWhite)};
   height: 47px;
-  padding: 14px 16px 14px 16px;
+  padding: 12px 16px;
   color: ${(props) => (props.primary ? colors.offWhite : colors.fontBlack)};
 `;
 

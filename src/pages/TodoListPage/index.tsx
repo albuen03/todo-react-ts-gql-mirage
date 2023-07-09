@@ -7,6 +7,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_TODO } from '../../graphql/mutations/todo';
 import { GET_TODOS } from '../../graphql/queries/todo';
 import TodoList from './TodoList';
+import Title from '../../components/Title';
 
 const TodoListPage: React.FC<{}> = () => {
   const [todo, setTodo] = useState<string>('');
@@ -66,60 +67,66 @@ const TodoListPage: React.FC<{}> = () => {
 
   return (
     <Layout>
-      <Col>
-        <>My Todos</>
-        <InputField
-          placeholder="Create a todo ..."
-          value={todo}
-          onChange={(e) => setTodo(e.target.value)}
-        />
-        <Row
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center'
-          }}
-        >
-          <Col span={12}>
-            <InputField
-              placeholder="search todos ..."
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </Col>
-          <Col span={12} style={{ alignItems: 'center' }}>
-            <Row style={{ justifyContent: 'flex-end' }}>
+      <Title>My Todos</Title>
+      <InputField
+        style={{ marginTop: '8px' }}
+        placeholder="Create a todo ..."
+        value={todo}
+        onChange={(e) => setTodo(e.target.value)}
+      />
+      <Row
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          alignItems: 'center',
+          marginTop: '8px'
+        }}
+      >
+        <Col span={15}>
+          <InputField placeholder="Search todos ..." onChange={(e) => setSearch(e.target.value)} />
+        </Col>
+        <Col span={9} style={{ alignItems: 'center' }}>
+          <Row
+            style={{
+              justifyContent: 'space-between',
+              alignItems: 'space-evenly',
+              paddingLeft: '10px'
+            }}
+          >
+            <Col span={12}>
               <Button label="Search" onClick={handleSearch} />
+            </Col>
+            <Col span={12}>
               <Button label="Create" primary={+true} onClick={handleCreateTodo} />
-            </Row>
-          </Col>
-        </Row>
-        <Select
-          style={{ width: '120px' }}
-          placeholder="Filter todos"
-          onChange={(value) => handleFilter(value)}
-          options={[
-            {
-              value: '',
-              label: 'All'
-            },
-            {
-              value: 'desc',
-              label: 'Newest'
-            },
-            {
-              value: 'asc',
-              label: 'Oldest'
-            }
-          ]}
-        />
-        <TodoList
-          todos={todosData?.userTodos}
-          currentPage={currentPage}
-          handleChangePage={handleChangePage}
-        />
-      </Col>
-      <>sdasd</>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Select
+        style={{ width: '120px', marginTop: '8px', marginBottom: '8px' }}
+        placeholder="Filter todos"
+        onChange={(value) => handleFilter(value)}
+        options={[
+          {
+            value: '',
+            label: 'All'
+          },
+          {
+            value: 'desc',
+            label: 'Newest'
+          },
+          {
+            value: 'asc',
+            label: 'Oldest'
+          }
+        ]}
+      />
+      <TodoList
+        todos={todosData?.userTodos}
+        currentPage={currentPage}
+        handleChangePage={handleChangePage}
+      />
     </Layout>
   );
 };

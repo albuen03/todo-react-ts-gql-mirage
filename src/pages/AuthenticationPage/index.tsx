@@ -1,4 +1,4 @@
-import { Form } from 'antd';
+import { Form, Row } from 'antd';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER, GET_TOKEN } from '../../graphql/mutations/authentication';
 import { useEffect } from 'react';
@@ -8,6 +8,7 @@ import routes from '../../routes';
 import Layout from '../../components/Layout';
 import InputField from '../../components/InputField';
 import Button from '../../components/Button';
+import Title from '../../components/Title';
 
 const AuthenticationPage: React.FC<{}> = () => {
   const [form] = Form.useForm();
@@ -15,13 +16,13 @@ const AuthenticationPage: React.FC<{}> = () => {
   const [getToken, { data: getTokenData, error: getTokenError }] = useMutation(GET_TOKEN);
   const [createUser, { data: createUserData, error: createUserError }] = useMutation(CREATE_USER);
 
-  const handleLogin = () => {
+  const handleLogin: VoidFunction = () => {
     form.validateFields().then((values) => {
       getToken({ variables: { email: values.email, password: values.password } });
     });
   };
 
-  const handleSignup = () => {
+  const handleSignup: VoidFunction = () => {
     form
       .validateFields()
       .then((values) =>
@@ -34,24 +35,23 @@ const AuthenticationPage: React.FC<{}> = () => {
       const { email, password } = form.getFieldsValue();
       getToken({ variables: { email, password } });
     }
-  }, createUserData);
+  }, [createUserData]);
 
   useEffect(() => {
-    if (getTokenData?.token && getTokenError) {
+    if (getTokenData?.token && !getTokenError) {
       localStorage.setItem(TOKEN_KEY, getTokenData.token);
       navigate(routes.todoList);
     }
-  }, getTokenData);
+  }, [getTokenData]);
 
   return (
     <Layout>
-      Sign Up or Log In
+      <Title>Sign Up or Log In</Title>
       <Form
         name="authentication"
         form={form}
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
+        wrapperCol={{ span: 24 }}
+        style={{ maxWidth: '100%', marginTop: '8px' }}
         initialValues={{ remember: true }}
         onFinish={() => console.log('onFinish')}
         onFinishFailed={() => console.log('onFinishFailed')}
@@ -89,10 +89,10 @@ const AuthenticationPage: React.FC<{}> = () => {
           <InputField placeholder="Password" />
         </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button onClick={handleLogin} label="Log in" />
+        <Row style={{ justifyContent: 'flex-end' }}>
+          <Button onClick={handleLogin} label="Log in" style={{ marginRight: '10px' }} />
           <Button primary={+true} onClick={handleSignup} label="Sign up" />
-        </Form.Item>
+        </Row>
       </Form>
     </Layout>
   );
