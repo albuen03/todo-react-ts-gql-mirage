@@ -16,11 +16,6 @@ const TodoListPage: React.FC<{}> = () => {
   const [sortByCreatedDate, setSortByCreatedDate] = useState<string | null>(null);
   const [createTodo, { data: createTodoData, error: createTodoError }] = useMutation(CREATE_TODO);
   const { data: todosData, refetch } = useQuery(GET_TODOS, {
-    variables: {
-      search,
-      sortByCreatedDate,
-      page: currentPage
-    },
     fetchPolicy: 'cache-and-network'
   });
 

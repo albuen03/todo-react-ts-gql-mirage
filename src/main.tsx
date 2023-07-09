@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
               colorBgContainer: colors.background,
               colorBgTextHover: colors.background,
               colorBgTextActive: colors.background,
-              borderRadius: 4,
+              borderRadius: 4
             }
           }
         }}

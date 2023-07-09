@@ -50,11 +50,11 @@ const Icon = styled.svg`
   stroke-width: 4px;
 `;
 
-const ContentText = styled.span<{ isDone: number }>`
+const ContentText = styled.span<{ $isDone: number }>`
   font: 400 16px Helvetica Neue;
   line-height: '19px';
-  color: ${(props) => (props.isDone ? colors.fontGray : colors.fontBlack)};
-  text-decoration: ${(props) => (props.isDone ? 'line-through' : '')};
+  color: ${(props) => (props.$isDone ? colors.fontGray : colors.fontBlack)};
+  text-decoration: ${(props) => (props.$isDone ? 'line-through' : '')};
 `;
 
 const CheckboxIndicator: React.FC<any> = ({ className, defaultChecked, ...props }) => {
@@ -97,7 +97,7 @@ const TodoItem: React.FC<Props> = ({ todo }) => {
             <CheckboxIndicator defaultChecked={+isDone} />
           </Col>
           <Col span={20}>
-            <ContentText isDone={+isDone}>{todo.content}</ContentText>
+            <ContentText $isDone={+isDone}>{todo.content}</ContentText>
           </Col>
         </Row>
       </Col>

@@ -23,7 +23,7 @@ export const server = createServer({
       resolvers: {
         Query: {
           // must use graphql pagination if available
-          async userTodos(obj: any, args: any, context: any, info: any) {
+          async userTodos(_: any, args: any, context: any) {
             const user = await getCurrentUser(context);
             const pageLimit = 5; // setting it here for this exercise, must be a frontend parameter
             const { search, sortByCreatedDate, page } = args;
@@ -55,7 +55,7 @@ export const server = createServer({
           }
         },
         Mutation: {
-          createUser(obj: any, args: any, context: any, info: any) {
+          createUser(_: any, args: any, context: any) {
             const { email, password } = args;
             const oldUser = context.mirageSchema.users.findBy({ email });
             if (oldUser) {
@@ -71,7 +71,7 @@ export const server = createServer({
             return user;
           },
 
-          async createTodo(obj: any, args: any, context: any, info: any) {
+          async createTodo(_: any, args: any, context: any) {
             const { content } = args;
             const user = await getCurrentUser(context);
             const now = dayjs().valueOf();
@@ -85,7 +85,7 @@ export const server = createServer({
             return todo;
           },
 
-          async updateTodo(obj: any, args: any, context: any, info: any) {
+          async updateTodo(_: any, args: any, context: any) {
             const {
               todo: { id, content, status }
             } = args;
@@ -98,7 +98,7 @@ export const server = createServer({
             return todo;
           },
 
-          async deleteTodo(obj: any, args: any, context: any, info: any) {
+          async deleteTodo(_: any, args: any, context: any) {
             const { id } = args;
             const user = await getCurrentUser(context);
             const todo = user.todos.models.find((t: any) => t.id === id);
@@ -107,7 +107,7 @@ export const server = createServer({
             return true;
           },
 
-          async token(obj: any, args: any, context: any, info: any) {
+          async token(obj: any, args: any, context: any) {
             const { email, password } = args;
             const user = context.mirageSchema.users.findBy({ email });
             if (!user) throw new GraphQLError('user does not exist or wrong password');
