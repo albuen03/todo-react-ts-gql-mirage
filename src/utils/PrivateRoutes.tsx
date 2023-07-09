@@ -1,7 +1,7 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import routes from '../routes';
-import { TOKEN_KEY } from '../contstants';
+import { TOKEN_KEY } from '../constants';
 
 const PrivateRoutes: React.FC<{}> = () => {
   const isLogin = !isEmpty(localStorage.getItem(TOKEN_KEY));

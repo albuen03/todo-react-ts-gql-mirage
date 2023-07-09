@@ -6,13 +6,12 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { CREATE_TODO } from '../../graphql/mutations/todo';
 import { GET_TODOS } from '../../graphql/queries/todo';
+import TodoList from './TodoList';
 
 const TodoListPage: React.FC<{}> = () => {
   const [todo, setTodo] = useState<any>('');
   const [createTodo, { data: createTodoData, error: createTodoError }] = useMutation(CREATE_TODO);
-  const { data, refetch } = useQuery(GET_TODOS);
-
-  console.log('data: ', data);
+  const { data: todosData, refetch } = useQuery(GET_TODOS);
 
   const handleCreateTodo = () => {
     createTodo({ variables: { content: todo } });
@@ -20,6 +19,7 @@ const TodoListPage: React.FC<{}> = () => {
 
   useEffect(() => {
     if (createTodoData && !createTodoError) {
+      setTodo('');
       refetch();
     }
   }, [createTodoData]);
@@ -30,7 +30,7 @@ const TodoListPage: React.FC<{}> = () => {
         <>My Todos</>
         <InputField
           placeholder="Create a todo ..."
-          defaultValue={todo}
+          value={todo}
           onChange={(e) => setTodo(e.target.value)}
         />
         <Row
@@ -47,12 +47,13 @@ const TodoListPage: React.FC<{}> = () => {
           <Col span={12} style={{ alignItems: 'center' }}>
             <Row style={{ justifyContent: 'flex-end' }}>
               <Button label="Log in" />
-              <Button label="Create" onClick={handleCreateTodo} />
+              <Button label="Create" primary={+true} onClick={handleCreateTodo} />
             </Row>
           </Col>
         </Row>
+        <TodoList todos={todosData?.userTodos} />
       </Col>
-      <>My Todos</>
+      <>sdasd</>
     </Layout>
   );
 };

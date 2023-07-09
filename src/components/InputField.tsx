@@ -14,7 +14,7 @@ const Circle = styled.div<{ size: number }>`
 `;
 
 const InputField: React.FC<InputFieldProps> = ({ ...restprops }) => {
-  return <Input prefix={<Circle size={12} />} {...restprops} />;
+  return <Input prefix={<Circle size={14} />} {...restprops} />;
 };
 
 export default InputField;

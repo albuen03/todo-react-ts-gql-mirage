@@ -2,7 +2,7 @@ import { Form } from 'antd';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER, GET_TOKEN } from '../../graphql/mutations/authentication';
 import { useEffect } from 'react';
-import { TOKEN_KEY } from '../../contstants';
+import { TOKEN_KEY } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import routes from '../../routes';
 import Layout from '../../components/Layout';
