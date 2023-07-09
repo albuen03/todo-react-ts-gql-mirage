@@ -1,5 +1,4 @@
 {
-  "homepage": "https://albuen03.github.io/todo-react-ts-gql-mirage",
   "name": "frontend-task-starter",
   "private": true,
   "version": "0.0.0",
@@ -10,9 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "dependencies": {
     "@apollo/client": "^3.7.15",
