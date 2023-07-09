@@ -9,3 +9,19 @@ export const CREATE_TODO = gql`
     }
   }
 `;
+
+export const UPDATE_TODO = gql`
+  mutation UpdateTodo($todo: TodoInput!) {
+    updateTodo(todo: $todo) {
+      id
+      content
+      status
+    }
+  }
+`;
+
+export const DELETE_TODO = gql`
+  mutation DeleteTodo($id: ID!) {
+    deleteTodo(id: $id)
+  }
+`;
