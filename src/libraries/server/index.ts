@@ -107,7 +107,7 @@ export const server = createServer({
             return true;
           },
 
-          async token(obj: any, args: any, context: any) {
+          async token(_: any, args: any, context: any) {
             const { email, password } = args;
             const user = context.mirageSchema.users.findBy({ email });
             if (!user) throw new GraphQLError('user does not exist or wrong password');
