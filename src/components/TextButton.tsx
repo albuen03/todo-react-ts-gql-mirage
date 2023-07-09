@@ -1,7 +1,6 @@
 import { styled } from 'styled-components';
-import colors from '../colors';
 
-const StyledButton = styled.button`
+const TextButton = styled.button<{ color: string }>`
   -webkit-appearance: button;
   -webkit-writing-mode: horizontal-tb !important;
   text-rendering: auto;
@@ -16,7 +15,7 @@ const StyledButton = styled.button`
   padding: 0px;
   border-width: 0px;
   line-height: 19px;
-  color: ${colors.fontGray};
+  color: ${(props) => props.color};
 `;
 
-export default StyledButton;
+export default TextButton;

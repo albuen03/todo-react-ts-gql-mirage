@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import { PaginatedTodos, Todo } from '../../../types/global';
 import colors from '../../../colors';
 import TodoItem from '../TodoItem';
-import { Pagination, Row } from 'antd';
+import { Col, Pagination } from 'antd';
 
 interface Props {
   currentPage: number;
@@ -11,32 +11,40 @@ interface Props {
 }
 
 const Card = styled.div`
-  width: 100%;
   border-radius: 16px;
   background-color: ${colors.offWhite};
-  padding: 16px 12px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
+const StyledParagraph = styled.p`
+  margin: 0px;
+  color: ${colors.fontGray};
+  font: 400 16px Helvetica Neue;
+`;
+
 const TodoList: React.FC<Props> = ({ todos, handleChangePage, currentPage }) => {
-  console.log('todos: ', todos);
-  const todosData = todos?.edges;
-  const showList = todosData && todosData.length > 0;
+  const todosData: Todo[] = todos?.edges;
+  const showList: boolean = todosData && todosData.length > 0;
   return (
     <Card>
       {!showList && (
-        <Row style={{ width: '50%' }}>You have no todo now. Did you just get everything done?</Row>
+        <Col style={{ width: '70%', textAlign: 'center' }}>
+          <StyledParagraph>You have no todo now.</StyledParagraph>
+          <StyledParagraph>Did you just get everything done?</StyledParagraph>
+        </Col>
       )}
       {showList && todosData.map((item: Todo) => <TodoItem todo={item} key={item.id} />)}
       {showList && (
         <Pagination
+          responsive
+          style={{ marginTop: '15px' }}
           defaultCurrent={currentPage}
           total={todos.totalCount}
-          size="small"
           showSizeChanger={false}
-          onChange={(value) => handleChangePage(value)}
+          onChange={(value: any) => handleChangePage(value)}
           pageSize={5}
         />
       )}

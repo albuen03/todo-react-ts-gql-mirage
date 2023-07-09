@@ -3,5 +3,7 @@ export default {
   offWhite: '#F3F1F2',
 
   fontBlack: '#0E0C0C',
-  fontGray: '#86797D'
+  fontGray: '#86797D',
+
+  background: '#dcd6d8'
 };

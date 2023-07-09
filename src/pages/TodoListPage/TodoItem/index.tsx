@@ -27,8 +27,8 @@ const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
 
 const StyledCheckbox = styled.div<{ background: string }>`
   display: inline-block;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   background: ${(props) => props.background};
   border: 2px solid ${colors.red};
   border-radius: 50%;
@@ -50,10 +50,17 @@ const Icon = styled.svg`
   stroke-width: 4px;
 `;
 
-const CheckboxIndicator = ({ className, defaultChecked, ...props }: any) => {
-  const background = defaultChecked ? colors.red : colors.offWhite;
+const ContentText = styled.span<{ isDone: number }>`
+  font: 400 16px Helvetica Neue;
+  line-height: '19px';
+  color: ${(props) => (props.isDone ? colors.fontGray : colors.fontBlack)};
+  text-decoration: ${(props) => (props.isDone ? 'line-through' : '')};
+`;
+
+const CheckboxIndicator: React.FC<any> = ({ className, defaultChecked, ...props }) => {
+  const background: string = defaultChecked ? colors.red : colors.offWhite;
   return (
-    <CheckboxContainer className={className}>
+    <CheckboxContainer className={className} style={{ marginRight: '6px' }}>
       <HiddenCheckbox background={background} {...props} />
       <StyledCheckbox background={background}>
         <Icon viewBox="0 0 24 24">
@@ -65,7 +72,7 @@ const CheckboxIndicator = ({ className, defaultChecked, ...props }: any) => {
 };
 
 const TodoItem: React.FC<Props> = ({ todo }) => {
-  const isDone = todo.status === todoStatuses.DONE;
+  const isDone: boolean = todo.status === todoStatuses.DONE;
   const [updateTodo] = useMutation(UPDATE_TODO, {
     refetchQueries: [GET_TODOS]
   });
@@ -73,42 +80,45 @@ const TodoItem: React.FC<Props> = ({ todo }) => {
     refetchQueries: [GET_TODOS]
   });
 
-  const handleUpdateStatus = () => {
+  const handleUpdateStatus: VoidFunction = () => {
     const status = todo.status === todoStatuses.TODO ? todoStatuses.DONE : todoStatuses.TODO;
     updateTodo({ variables: { todo: { status, id: todo.id } } });
   };
 
-  const handleDelete = () => {
+  const handleDelete: VoidFunction = () => {
     deleteTodo({ variables: { id: todo.id } });
   };
 
   return (
-    <Row style={{ width: '100%' }}>
+    <Row style={{ width: '100%', alignItems: 'center' }}>
       <Col span={14}>
-        <Row style={{ alignItems: 'center', border: '1px solid black' }}>
-          <CheckboxIndicator className="sample" defaultChecked={+isDone} />
-          <span
-            style={{
-              fontWeight: 400,
-              fontSize: '16px',
-              lineHeight: '19px',
-              color: colors.fontBlack,
-              fontFamily: 'helvetica',
-              marginLeft: '4px'
-            }}
-          >
-            {todo.content}
-          </span>
+        <Row style={{ alignItems: 'center', padding: '5px 0px' }}>
+          <Col span={3}>
+            <CheckboxIndicator defaultChecked={+isDone} />
+          </Col>
+          <Col span={20}>
+            <ContentText isDone={+isDone}>{todo.content}</ContentText>
+          </Col>
         </Row>
       </Col>
       <Col span={10}>
-        <Row style={{ alignItems: 'center', border: '1px solid black', padding: 0 }}>
-          {!isDone && <TextButton onClick={handleUpdateStatus}>Done</TextButton>}
+        <Row style={{ alignItems: 'center', justifyContent: 'flex-end', padding: '5px 0px' }}>
+          <TextButton
+            color={colors.red}
+            onClick={() => console.log('asdasd')}
+            style={{ marginRight: '10px' }}
+          >
+            Edit
+          </TextButton>
+          {!isDone && (
+            <TextButton color={colors.fontGray} onClick={handleUpdateStatus}>
+              Done
+            </TextButton>
+          )}
           {isDone && (
-            <>
-              <TextButton onClick={() => console.log('asdasd')}>Edit</TextButton>
-              <TextButton onClick={handleDelete}>Remove</TextButton>
-            </>
+            <TextButton color={colors.fontGray} onClick={handleDelete}>
+              Remove
+            </TextButton>
           )}
         </Row>
       </Col>
